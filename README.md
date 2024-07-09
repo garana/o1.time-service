@@ -9,11 +9,11 @@ There are essentially to retrieve time/date:
 #3 the exact implementation depend on different CPU models and vendors.
 
 This library provides:
-a. A time source ("producer"), which calls `clock_gettime(CLOCK_MONOTONIC)` periodically
+1. A time source ("producer"), which calls `clock_gettime(CLOCK_MONOTONIC)` periodically
    (frequency is configurable) and stores its output in shared memory (it also stores
    `clock_getres(CLOCK_MONOTONIC)` in the same shared memory area).  This is expected
    to run either in a separate process or thread.
-b. A time reader ("consumer") which reads from this shared memory area.
+2. A time reader ("consumer") which reads from this shared memory area.
 
 This allows the time to be read by only reading from memory.
 
