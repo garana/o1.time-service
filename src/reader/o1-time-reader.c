@@ -37,7 +37,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "o1-time-reader.h"
-#include "o1shm.h"
+#include "../../o1.shm/src/o1shm.h"
 
 static
 struct o1_time_record*
