@@ -1,0 +1,3 @@
+[submodule "o1.shm"]
+	path = o1.shm
+	url = https://github.com/garana/o1.shm.git
