@@ -41,7 +41,7 @@
 
 static
 struct o1_time_record*
-get_record() {
+get_record(void) {
     int fd = -1;
     static struct o1_time_record* time_record = NULL;
     char* error_message = NULL;
