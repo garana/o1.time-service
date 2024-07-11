@@ -35,11 +35,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include "cli-common.h"
+#include "o1-time.h"
 
 const char* help =
-    "Usage: o1-time-source -h|period\n"
+    "Usage: o1-time-source -h|-u|period\n"
     "  -h shows this message\n"
+    "  -u unlink o1.shm.time name with memory mapping\n"
     "  period is in micro seconds, how often we retrieve the current time.\n"
     "\n";
 
@@ -47,6 +50,8 @@ void parse_options(
     int argc, const char** argv,
     unsigned long* period
 ) {
+    *period = 0;
+
     if (argc != 2) {
         fputs(help, stderr);
         exit(1);
@@ -55,6 +60,14 @@ void parse_options(
     if (!strcmp(argv[1], "-h")) {
         fputs(help, stdout);
         exit(0);
+    }
+
+    if (!strcmp(argv[1], "-u")) {
+        int status = o1_time_unlink();
+        if (!status)
+            exit(0);
+        fprintf(stderr, "shm_unlink failed: %s\n", strerror(errno));
+        exit(1);
     }
 
     if (!*argv[1]) {

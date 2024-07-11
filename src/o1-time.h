@@ -53,4 +53,6 @@ struct o1_time_record {
 
 uint64_t o1_ts2o1tv(struct timespec*);
 
+int o1_time_unlink(void);
+
 #endif //O1_TIME_SERVICE_H

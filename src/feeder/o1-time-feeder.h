@@ -35,6 +35,8 @@
 #ifndef O1_TIME_SERVICE_SOURCE_H
 #define O1_TIME_SERVICE_SOURCE_H
 
+#include "../o1-time.h"
+
 /**
  * Run the time polling loop, waiting @param period microseconds between
  * each read.

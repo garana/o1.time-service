@@ -35,6 +35,8 @@
 #ifndef O1TIME_CLI_COMMON_H
 #define O1TIME_CLI_COMMON_H
 
+#include <stdbool.h>
+
 extern const char* help;
 
 void parse_options(
