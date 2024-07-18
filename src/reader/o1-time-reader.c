@@ -45,19 +45,26 @@ get_record(void) {
     int fd = -1;
     static struct o1_time_record* time_record = NULL;
     char* error_message = NULL;
+    int error_code = SHM_ALLOC_OK;
 
     if (!time_record)
-        time_record = shm_alloc(&fd, O1_TIME_SHM_NAME, sizeof(struct o1_time_record), O_RDONLY, &error_message);
+        time_record = shm_alloc(&fd, O1_TIME_SHM_NAME, sizeof(struct o1_time_record), O_RDONLY, &error_code);
 
     if (
-        ((void*)time_record == SHM_ALLOC_OPEN_ERROR) &&
+        (error_code == SHM_ALLOC_OPEN_ERROR) &&
         (errno == ENOENT)
     )
         return NULL;
 
-    if (error_message) {
-        fprintf(stderr, "fatal: %s", error_message);
-        exit(1);
+    if (!time_record) {
+        error_message = shm_error(error_code, O1_TIME_SHM_NAME,
+            sizeof(struct o1_time_record)
+        );
+
+        if (error_message) {
+            fprintf(stderr, "fatal: %s", error_message);
+            exit(1);
+        }
     }
 
     return time_record;

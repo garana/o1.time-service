@@ -63,18 +63,18 @@ static void o1_must_succeed(int status, const char* format, ...) {
 _Noreturn void o1_time_periodic_update(unsigned long period) {
 
     int fd = -1;
-    char* message;
+    int error_code = SHM_ALLOC_OK;
 
     struct o1_time_record* time_record = shm_alloc(
         &fd,
         O1_TIME_SHM_NAME,
         sizeof(struct o1_time_record),
         O_CREAT | O_RDWR,
-        &message
+        &error_code
     );
 
-    if (message) {
-        fprintf(stderr, "%s\n", message);
+    if (error_code != SHM_ALLOC_OK) {
+        fprintf(stderr, "%s\n", shm_error(error_code, O1_TIME_SHM_NAME, sizeof(struct o1_time_record)));
         exit(1);
     }
 
