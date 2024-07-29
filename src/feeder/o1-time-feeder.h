@@ -40,6 +40,9 @@
 /**
  * Run the time polling loop, waiting @param period microseconds between
  * each read.
+ *
+ * It will only return if `usleep(2)` is interrupted due to a signal, is
+ * up to the consumer to either block or handle them.
  * @param period
  */
 _Noreturn void o1_time_periodic_update(unsigned long period);
